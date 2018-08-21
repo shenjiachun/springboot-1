@@ -23,27 +23,17 @@ public class MyBatisCRUDController {
 
     @RequestMapping("/saveUser")
     public IMoocJSONResult saveUser() throws Exception {
-
-        User user = new User("张壹鸣","1","003958");
-
-        userService.saveUser(user);
-
         return IMoocJSONResult.ok("保存成功");
     }
 
     @RequestMapping("/update")
     public IMoocJSONResult update() throws Exception {
-
-        User user = new User(6,"张壹鸣11","1","003958");
-
-        userService.updateUser(user);
-
         return IMoocJSONResult.ok("保存成功");
     }
 
     @RequestMapping("/getAllUser")
     public IMoocJSONResult getAllUser(User user) throws Exception {
-        return IMoocJSONResult.ok(userService.getAllUser(user));
+        return null;
     }
 
 }

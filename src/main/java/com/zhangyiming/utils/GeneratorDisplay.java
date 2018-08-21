@@ -16,22 +16,20 @@ import java.util.List;
  */
 public class GeneratorDisplay {
 
-    public void generator() throws Exception{
+    private void generator() throws Exception{
 
-        List<String> warnings = new ArrayList<String>();
-        boolean overwrite = true;
+        List<String> warnings = new ArrayList<>();
         //指定 逆向工程配置文件
         File configFile = new File("generatorConfig.xml");
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(configFile);
-        DefaultShellCallback callback = new DefaultShellCallback(overwrite);
-        MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config,
-                callback, warnings);
+        DefaultShellCallback callback = new DefaultShellCallback(true);
+        MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
         myBatisGenerator.generate(null);
 
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         try {
             GeneratorDisplay generatorSqlmap = new GeneratorDisplay();
             generatorSqlmap.generator();

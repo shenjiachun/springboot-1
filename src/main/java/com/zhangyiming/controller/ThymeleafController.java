@@ -17,11 +17,10 @@ import java.util.List;
 @RequestMapping("th")
 public class ThymeleafController {
 
-//    @RequestMapping("/index")
-//    public String index(ModelMap map) {
-//        map.addAttribute("name", "thymeleaf-imooc");
-//        return "thymeleaf/index";
-//    }
+    @RequestMapping("/index")
+    public String index(ModelMap map) {
+        return "index";
+    }
 //
 //    @RequestMapping("center")
 //    public String center() {

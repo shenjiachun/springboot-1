@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8" />
+    <title>登录</title>
+</head>
+<body>
+    <h1>欢迎登录!${user.username }</h1>
+    <form action="${pageContext.request.contextPath }/loginUser" method="post">
+        <label>
+            <input type="text" name="username">
+        </label><br>
+        <label>
+            <input type="password" name="password">
+        </label><br>
+        <input type="submit" value="提交">
+    </form>
+</body>
+</html>

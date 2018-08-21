@@ -1,7 +1,9 @@
 package com.zhangyiming.controller;
 
+import com.zhangyiming.mapper.UserMapper;
 import com.zhangyiming.pojo.IMoocJSONResult;
 import com.zhangyiming.pojo.Resource;
+import com.zhangyiming.pojo.User;
 import com.zhangyiming.timer.rabbitmq.Sender;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +21,13 @@ public class HellowController {
     @Autowired
     private Resource resource;
 
-    @RequestMapping(value = "/hellow")
-    public Object hellow(){
-//        throw new RuntimeException("异常测试！");
-        return "hellow";
+    @Autowired
+    private UserMapper userMapper;
+
+    @RequestMapping(value = "/hello")
+    public Object hello(){
+        User user = userMapper.findUserByUserName("xyycici");
+        return new IMoocJSONResult(user);
     }
 
     @RequestMapping(value = "/getResource")
