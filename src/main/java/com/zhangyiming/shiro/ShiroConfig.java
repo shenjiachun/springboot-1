@@ -1,6 +1,8 @@
 package com.zhangyiming.shiro;
 
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.mgt.SessionManager;
+import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
@@ -43,6 +45,17 @@ public class ShiroConfig {
     }
 
     /**
+     * 自定义sessionManager
+     */
+    @Bean
+    public SessionManager sessionManager(){
+        ShiroSessionManager shiroSessionManager = new ShiroSessionManager();
+        //这里可以不设置。Shiro有默认的session管理。如果缓存为Redis则需改用Redis的管理
+        shiroSessionManager.setSessionDAO(new EnterpriseCacheSessionDAO());
+        return shiroSessionManager;
+    }
+
+    /**
      * 注入 securityManager
      */
     @Bean
@@ -50,6 +63,10 @@ public class ShiroConfig {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 设置realm.
         securityManager.setRealm(customRealm());
+        //自定义session管理
+        securityManager.setSessionManager(sessionManager());
+        //自定义缓存实现
+//        securityManager.setCacheManager(ehCacheManager());
         return securityManager;
     }
 
