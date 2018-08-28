@@ -1,15 +1,10 @@
 package com.zhangyiming.controller;
 
 import com.zhangyiming.pojo.IMoocJSONResult;
-import com.zhangyiming.pojo.User;
-import com.zhangyiming.utils.JsonUtils;
-import com.zhangyiming.utils.RedisOperator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Date;
 
 /**
  * @author 张壹鸣
@@ -21,14 +16,12 @@ import java.util.Date;
 public class RedisController {
 
     @Autowired
-    private StringRedisTemplate strRedis;
-
-    @Autowired
-    private RedisOperator redis;
+    private RedisTemplate redisTemplate;
 
     @RequestMapping("/test")
-    public IMoocJSONResult test() {
-        return null;
+    public String test() {
+        redisTemplate.opsForValue().set("userName", "hello zhangyiming");
+        return String.valueOf(redisTemplate.opsForValue().get("userName"));
     }
 
     @RequestMapping("/getJsonList")

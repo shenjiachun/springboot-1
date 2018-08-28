@@ -8,12 +8,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisClusterConfiguration;
 import org.springframework.data.redis.connection.RedisPassword;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisPoolConfig;
 
 import java.time.Duration;
@@ -24,20 +22,20 @@ import java.util.*;
 @EnableAutoConfiguration
 public class RedisConfig {
 
-    @Value("${spring.redis.host}")
-    private String host;
-
-    @Value("${spring.redis.port}")
-    private Integer port;
-
-    @Value("${spring.redis.database}")
-    private Integer database;
+//    @Value("${spring.redis.host}")
+//    private String host;
+//
+//    @Value("${spring.redis.port}")
+//    private Integer port;
+//
+//    @Value("${spring.redis.database}")
+//    private Integer database;
 
     @Value("${spring.redis.timeout}")
     private Integer timeout;
 
-    @Value("${spring.redis.password}")
-    private String password;
+//    @Value("${spring.redis.password}")
+//    private String password;
 
     @Value("${spring.redis.cluster.nodes}")
     private String clusterNodes;
@@ -51,28 +49,28 @@ public class RedisConfig {
      * @return
      */
     @Bean
-    @ConfigurationProperties(prefix = "spring.redis.pool")
+    @ConfigurationProperties(prefix = "spring.redis.jedis.pool")
     public JedisPoolConfig getRedisConfig() {
         return new JedisPoolConfig();
     }
 
     @Bean
-    @ConfigurationProperties(prefix = "spring.redis")
+    public RedisClusterConfiguration redisClusterConfiguration(){
+        String[] cNodes = clusterNodes.split(",");
+        return new RedisClusterConfiguration(Arrays.asList(cNodes));
+    }
+
+    @Bean
+//    @ConfigurationProperties(prefix = "spring.redis")
     public JedisConnectionFactory getConnectionFactory() {
 //        JedisConnectionFactory factory = new JedisConnectionFactory();
 //        factory.setUsePool(true);
 //        JedisPoolConfig config = getRedisConfig();
 //        factory.setPoolConfig(config);
+//        return factory;
 
-        String[] cNodes = clusterNodes.split(",");
-//        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-//        redisStandaloneConfiguration.setHostName(host);
-//        redisStandaloneConfiguration.setPort(port);
-//        redisStandaloneConfiguration.setDatabase(database);
-//        redisStandaloneConfiguration.setPassword(RedisPassword.of(password));
-
-        RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration(Arrays.asList(cNodes));
-        redisClusterConfiguration.setPassword(RedisPassword.of(password));
+        RedisClusterConfiguration redisClusterConfiguration = redisClusterConfiguration();
+        redisClusterConfiguration.setPassword(RedisPassword.of(""));
 
         JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfiguration = JedisClientConfiguration.builder();
         //  connection timeout
@@ -84,8 +82,8 @@ public class RedisConfig {
     @Bean(name = "redisTemplate")
     public RedisTemplate redisTemplate() {
         JedisConnectionFactory factory = getConnectionFactory();
-        log.info(this.host+","+factory.getHostName()+","+factory.getDatabase());
-        log.info(this.password+","+factory.getPassword());
+        log.info(factory.getHostName()+","+factory.getDatabase());
+        log.info(factory.getPassword());
         log.info(String.valueOf(factory.getPoolConfig().getMaxIdle()));
         return new StringRedisTemplate(getConnectionFactory());
     }
