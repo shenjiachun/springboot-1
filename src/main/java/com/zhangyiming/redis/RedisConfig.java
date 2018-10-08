@@ -12,6 +12,8 @@ import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.JedisPoolConfig;
 
 import java.time.Duration;
@@ -77,6 +79,32 @@ public class RedisConfig {
         jedisClientConfiguration.connectTimeout(Duration.ofMillis(timeout));
 
         return new JedisConnectionFactory(redisClusterConfiguration, jedisClientConfiguration.build());
+    }
+
+    /**
+     * 设置数据存入 redis 的序列化方式,并开启事务
+     */
+    private void initDomainRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
+        //如果不配置Serializer，那么存储的时候缺省使用String，如果用User类型存储，那么会提示错误User can't cast to String！
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        // 开启事务
+        redisTemplate.setEnableTransactionSupport(true);
+        redisTemplate.setConnectionFactory(getConnectionFactory());
+    }
+
+    /**
+     * 实例化 RedisTemplate 对象
+     *
+     * @return
+     */
+    @Bean
+    public RedisTemplate<String, Object> functionDomainRedisTemplate() {
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+        initDomainRedisTemplate(redisTemplate);
+        return redisTemplate;
     }
 
     @Bean(name = "redisTemplate")

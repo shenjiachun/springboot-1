@@ -18,10 +18,10 @@
 
   <select id="findUserByUserName" parameterType="string" resultMap="BaseResultMap">
     SELECT u.*,r.*,m.* FROM user u
-      left join user_role ur on ur.uid=u.uid
-      left join role r on r.rid=ur.rid
-      left join module_role mr on mr.rid=r.rid
-      left join module m on mr.mid=m.mid
+    left join user_role ur on ur.uid=u.uid
+    left join role r on r.rid=ur.rid
+    left join module_role mr on mr.rid=r.rid
+    left join module m on mr.mid=m.mid
     WHERE u.username = #{username}
   </select>
 

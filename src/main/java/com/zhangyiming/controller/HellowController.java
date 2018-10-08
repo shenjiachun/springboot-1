@@ -25,9 +25,10 @@ public class HellowController {
     private UserMapper userMapper;
 
     @RequestMapping(value = "/hello")
-    public Object hello(){
-        User user = userMapper.findUserByUserName("xyycici");
-        return new IMoocJSONResult(user);
+    public Object hello(String name){
+        return name + " hello";
+//        User user = userMapper.findUserByUserName("xyycici");
+//        return new IMoocJSONResult(user);
     }
 
     @RequestMapping(value = "/getResource")
