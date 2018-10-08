@@ -20,7 +20,9 @@ import tk.mybatis.spring.annotation.MapperScan;
 @ComponentScan(basePackages= {"com"})
 @EnableCaching
 public class ZhangyimingApplication {
+
 	public static void main(String[] args) {
 		SpringApplication.run(ZhangyimingApplication.class, args);
 	}
+
 }

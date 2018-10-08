@@ -32,13 +32,12 @@
 </nav>
 <div class="container">
     <div class="starter-template">
-        <h1 th:text="${msg.title}"></h1>
-        <p class="bg-primary" th:text="${msg.content}"></p>
-        <div sec:authorize="hasRole('ROLE_ADMIN')">
-            <p class="bg-info" th:text="${msg.extraInfo}"></p>
+        <p class="bg-primary"></p>
+        <div sec:authorize="hasRole('ADMIN')">
+            <p class="bg-info">ADMIN</p>
         </div>
-        <div sec:authorize="hasRole('ROLE_USER')">
-            <p class="bg-info">无更多显示信息</p>
+        <div sec:authorize="hasRole('USER')">
+            <p class="bg-info">USER</p>
         </div>
         <form th:action="@{/logout}" method="post">
             <input type="submit" class="btn btn-primary" value="注销"/>

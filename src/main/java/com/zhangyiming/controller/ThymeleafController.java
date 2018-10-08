@@ -19,13 +19,13 @@ public class ThymeleafController {
 
     @RequestMapping("/index")
     public String index(ModelMap map) {
-        return "index";
+        return "security";
     }
 //
-//    @RequestMapping("center")
-//    public String center() {
-//        return "thymeleaf/center/center";
-//    }
+    @RequestMapping("center")
+    public String center() {
+        return "thymeleaf/center/center";
+    }
 //
 //    @RequestMapping("test")
 //    public String test(ModelMap map) {

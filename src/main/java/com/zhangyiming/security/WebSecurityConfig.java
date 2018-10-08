@@ -10,6 +10,7 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.ForwardAuthenticationSuccessHandler;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
@@ -50,11 +51,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().httpBasic().authenticationEntryPoint(authenticationEntryPoint)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/hello").hasRole("USER") // 需要权限ROLE_COMMON 才可以访问的路径
+                .antMatchers("/hello").access("hasRole('USER')") // 需要权限ROLE_COMMON 才可以访问的路径
                 .anyRequest().authenticated()
                 .and().formLogin()
-                .defaultSuccessUrl("/html/index.html")
-//                .successHandler(authenticationSuccessHandler) // 登录成功
+                .defaultSuccessUrl("security")
+//                .successHandler(new ForwardAuthenticationSuccessHandler("/security")) // 登录成功
                 .failureHandler(authenticationFailureHandler) // 登录失败
                 .permitAll()/*.loginPage("/login").defaultSuccessUrl("/index").failureUrl("/login?error")*/
                 .and().logout()
