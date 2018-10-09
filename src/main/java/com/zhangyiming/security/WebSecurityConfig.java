@@ -54,8 +54,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/hello").access("hasRole('USER')") // 需要权限ROLE_COMMON 才可以访问的路径
                 .anyRequest().authenticated()
                 .and().formLogin()
-                .defaultSuccessUrl("security")
-//                .successHandler(new ForwardAuthenticationSuccessHandler("/security")) // 登录成功
+//                .defaultSuccessUrl("http://localhost:8080/th/index")
+                .successHandler(authenticationSuccessHandler) // 登录成功
                 .failureHandler(authenticationFailureHandler) // 登录失败
                 .permitAll()/*.loginPage("/login").defaultSuccessUrl("/index").failureUrl("/login?error")*/
                 .and().logout()
