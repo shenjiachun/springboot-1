@@ -32,8 +32,8 @@ public class MyBatisCRUDController {
     }
 
     @RequestMapping("/getAllUser")
-    public IMoocJSONResult getAllUser(User user) throws Exception {
-        return null;
+    public IMoocJSONResult getAllUser(User user,String username) throws Exception {
+        return new IMoocJSONResult(userService.findUserByUserName(username));
     }
 
 }

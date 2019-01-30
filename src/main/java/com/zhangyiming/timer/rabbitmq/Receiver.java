@@ -2,8 +2,6 @@ package com.zhangyiming.timer.rabbitmq;
 
 import com.rabbitmq.client.*;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;

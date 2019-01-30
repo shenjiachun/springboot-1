@@ -1,11 +1,13 @@
 package com.zhangyiming.controller;
 
+import com.zhangyiming.pojo.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,38 +23,40 @@ public class ThymeleafController {
     public String index(ModelMap map) {
         return "security";
     }
-//
+
     @RequestMapping("center")
     public String center() {
         return "thymeleaf/center/center";
     }
-//
-//    @RequestMapping("test")
-//    public String test(ModelMap map) {
-//
-//        User u = new User();
-//        u.setUsername("superadmin");
-//        u.setPassword("123465");
-//
-//        map.addAttribute("user", u);
-//
-//        User u1 = new User();
-//        u1.setUsername("imooc");
-//        u1.setPassword("123456");
-//
-//        User u2 = new User();
-//        u2.setUsername("LeeCX");
-//        u2.setPassword("123456");
-//
-//        List<User> userList = new ArrayList<>();
-//        userList.add(u);
-//        userList.add(u1);
-//        userList.add(u2);
-//
-//        map.addAttribute("userList", userList);
-//
-//        return "thymeleaf/test";
-//    }
+
+    @RequestMapping("test")
+    public String test(ModelMap map) {
+
+        User u = new User();
+        u.setUsername("superadmin");
+        u.setPassword("123465");
+        u.setAge(24);
+        u.setBirthday(new Date());
+
+        map.addAttribute("user", u);
+
+        User u1 = new User();
+        u1.setUsername("imooc");
+        u1.setPassword("123456");
+
+        User u2 = new User();
+        u2.setUsername("LeeCX");
+        u2.setPassword("123456");
+
+        List<User> userList = new ArrayList<>();
+        userList.add(u);
+        userList.add(u1);
+        userList.add(u2);
+
+        map.addAttribute("userList", userList);
+
+        return "thymeleaf/test";
+    }
 //
 //    @PostMapping("postform")
 //    public String postform(User u) {

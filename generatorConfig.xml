@@ -28,7 +28,7 @@
         <javaClientGenerator targetPackage="com.zhangyiming.mapper" targetProject="src/main/java"
                              type="XMLMAPPER"/>
 
-        <table tableName="module"/>
+        <table tableName="goods"/>
 
     </context>
 </generatorConfiguration>

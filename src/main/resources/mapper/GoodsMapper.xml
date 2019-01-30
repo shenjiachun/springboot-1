@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhangyiming.mapper.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.zhangyiming.dto.Goods" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="paths" property="paths" jdbcType="VARCHAR" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="get" parameterType="com.zhangyiming.dto.Goods" resultMap="BaseResultMap">
+    select * from goods
+    where 1=1
+    <if test="name != '' and name !=null ">
+      and name = #{name}
+    </if>
+  </select>
+
+</mapper>
