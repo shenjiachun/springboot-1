@@ -14,6 +14,12 @@ import java.util.List;
  */
 public interface UserService {
 
-    User findUserByUserName(String username);
+    void findUserByUserName(String username);
+
+    void insertUser();
+
+    void updateUser1() throws InterruptedException;
+
+    void updateUser2() throws InterruptedException;
 
 }

@@ -10,7 +10,7 @@ public class GrpcConfig {
 
     @Bean
     public Channel init() {
-        return ManagedChannelBuilder.forAddress("127.0.0.1", 9898)
+        return ManagedChannelBuilder.forAddress("172.20.200.52", 5002)
                 // Channels are secure by default (via SSL/TLS). For the example we disable TLS to avoid
                 // needing certificates.
                 .usePlaintext(true)

@@ -3,8 +3,11 @@ package com.zhangyiming.service.impl;
 import com.zhangyiming.dto.Goods;
 import com.zhangyiming.mapper.GoodsMapper;
 import com.zhangyiming.service.GoodsService;
+import com.zhangyiming.service.RoleService;
+import com.zhangyiming.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,6 +24,10 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Autowired
     private GoodsMapper goodsMapper;
+    @Autowired
+    private RoleService roleService;
+    @Autowired
+    private UserService userService;
 
     @Override
     public List<Goods> get(Goods goods) {
@@ -48,6 +55,32 @@ public class GoodsServiceImpl implements GoodsService {
             }
         }
         return goodsList;
+    }
+
+    @Override
+    @Transactional( rollbackFor = Throwable.class)
+    public void test1() {
+        userService.insertUser();
+        roleService.insertRoleException();
+    }
+
+    @Override
+    @Transactional( rollbackFor = Throwable.class)
+    public void test2() {
+        userService.insertUser();
+        try {
+            roleService.insertRoleException();
+        }catch (Throwable throwable){
+            System.out.println("方法回滚");
+        }
+    }
+
+    @Override
+    @Transactional( rollbackFor = Throwable.class)
+    public void test3() {
+        userService.insertUser();
+        roleService.insertRole();
+        throw new RuntimeException("测试");
     }
 
 }

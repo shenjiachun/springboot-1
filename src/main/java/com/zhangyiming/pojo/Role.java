@@ -12,8 +12,6 @@ public class Role {
     @Id
     private Integer rid;
     private String rname;
-    @Transient
-    private Set<Module> modules = new HashSet<>();
 
     public Integer getRid() {
         return rid;
@@ -31,11 +29,8 @@ public class Role {
         this.rname = rname;
     }
 
-    public Set<Module> getModules() {
-        return modules;
+    public Role(String rname) {
+        this.rname = rname;
     }
 
-    public void setModules(Set<Module> modules) {
-        this.modules = modules;
-    }
 }
