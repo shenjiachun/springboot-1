@@ -6,6 +6,7 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.KafkaListenerContainerFactory;
@@ -36,6 +37,7 @@ public class KafkaConfiguration {
      *  消费者配置信息
      */
     @Bean
+    @Scope
     Map<String, Object> getKafkaConfigMap() {
         Map<String, Object> props = Maps.newHashMap();
         props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
